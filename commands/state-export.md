@@ -1,6 +1,6 @@
 ---
-command: /state-sync-memory
-description: Syncs temporary bundle decisions into project memory documents
+command: /state-export
+description: Exports bundle decisions into repository memory documents
 alwaysApply: false
 ---
 
@@ -12,8 +12,19 @@ All inputs have defaults and only need to be specified when overriding.
 
 - `repo_path` -- absolute path to the repository. Default: run `git rev-parse --show-toplevel` in the current
   working directory.
-- `bundle_path` -- absolute path to the active bundle. Default: most recent active bundle by `last_updated`.
+- `bundle_path` -- absolute path to the active bundle. Default: match active bundles by repo_path + branch +
+  agent_id (see Bundle Selection below).
 - `memory_dir` -- default: `<repo_path>/memory-bank`
+
+## Bundle Selection
+
+When `bundle_path` is not provided, resolve the current `repo_path` (via `git rev-parse --show-toplevel`), `branch`
+(via `git branch --show-current`), and `agent_id` (see `/state-start` for derivation per environment). Then:
+
+1. Exact match on repo_path + branch + agent_id -- use it.
+2. If no exact match, list active bundles matching repo_path + branch. Present the list and ask the user which bundle
+   to target. Do not silently pick one.
+3. If no bundles match repo_path + branch, report an error -- there is nothing to export.
 
 ## Behavior
 

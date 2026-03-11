@@ -23,4 +23,4 @@ Generate a restart-friendly overview of all bundles. Optionally flag stale bundl
    - **Needs Attention**: bundles missing a next step or with stale timestamps.
    - **Recently Completed**: archived bundles within window.
    - **Suggested First Task**: most recent active bundle with a clear next action.
-4. If `prune=true`, append a **Prune Candidates** section. For each stale bundle, suggest: `refresh` (has next command), `archive` (completed/paused/ready-for-review), `cancel` (no progress), or `needs-triage` (missing metadata). If `auto_archive_paused=true`, run `/state-finalize` on stale paused bundles.
+4. If `prune=true`, append a **Prune Candidates** section. For each stale bundle, suggest: `refresh` (has next command), `archive` (completed/paused/ready-for-review), `cancel` (no progress), or `needs-triage` (missing metadata). If `auto_archive_paused=true`, run `/state-archive` on stale paused bundles.
