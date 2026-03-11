@@ -4,56 +4,23 @@ description: Builds a concise summary of active and recently archived work bundl
 alwaysApply: false
 ---
 
-## Work State Summary
+Generate a restart-friendly overview of all bundles. Optionally flag stale bundles for cleanup.
 
-Creates a restart-friendly daily report so you can quickly remember what each agent was doing and what to do
-next.
+## Optional inputs
 
-## Inputs
+- `state_root` -- default: `/home/jkhines/Documents/agent-state`
+- `days` -- recent archive window, default: `2`
+- `prune` -- if `true`, flag stale bundles (inactive >= `stale_days`) with suggested actions
+- `stale_days` -- staleness threshold when pruning, default: `3`
+- `auto_archive_paused` -- if `true` and `prune=true`, auto-finalize stale paused bundles
 
-When `/state-summary` is invoked:
+## Behavior
 
-1. Optional:
-   - `state_root` (default: `/home/jkhines/Documents/agent-state`)
-   - `days` (default: `2`) for recent archive window
-   - `output_file` (default: `<state_root>/reports/daily-<YYYY-MM-DD>.md`)
-
-## Execution Steps
-
-1. Validate structure:
-   - Ensure `<state_root>/active` and `<state_root>/archive` exist.
-   - Ensure `<state_root>/reports` exists or create it.
-2. Enumerate active bundles:
-   - For each folder in `active/`, read `context.json`, `resume.md`, and `notes.md` if present.
-   - Extract: repo, branch, agent, status, last_updated, blocker summary, next command.
-3. Enumerate recent archives:
-   - Read bundles in `archive/` modified in the last `days`.
-   - Extract status and summary from `context.json` and `archive/index.md` when available.
-4. Produce report sections:
-   - `Today Focus`: active bundles sorted by `last_updated` descending.
-   - `Needs Attention`: active bundles missing `resume.md` next step or stale `last_updated`.
-   - `Recently Completed`: archived bundles within `days`.
-   - `Suggested First Task`: one recommended starting point (most recent active with clear next action).
-5. Save report:
-   - Write markdown to `output_file`.
-6. Return:
-   - Report path
-   - Count of active bundles
-   - Count of stale or incomplete bundles
-
-## Example Commands
-
-```bash
-root="/home/jkhines/Documents/agent-state"
-out="$root/reports/daily-$(date +%F).md"
-mkdir -p "$root/reports"
-{
-  echo "# Agent State Summary ($(date +%F))"
-  echo
-  echo "## Today Focus"
-  for b in "$root"/active/*; do
-    [ -d "$b" ] || continue
-    echo "- $(basename "$b")"
-  done
-} > "$out"
-```
+1. Scan `active/` bundles. For each, read `context.json`, `resume.md`, `notes.md`. Extract: repo, branch, agent, status, last_updated, blockers, next command.
+2. Scan `archive/` bundles modified within `days`.
+3. Display a markdown summary with sections:
+   - **Today Focus**: active bundles sorted by recency.
+   - **Needs Attention**: bundles missing a next step or with stale timestamps.
+   - **Recently Completed**: archived bundles within window.
+   - **Suggested First Task**: most recent active bundle with a clear next action.
+4. If `prune=true`, append a **Prune Candidates** section. For each stale bundle, suggest: `refresh` (has next command), `archive` (completed/paused/ready-for-review), `cancel` (no progress), or `needs-triage` (missing metadata). If `auto_archive_paused=true`, run `/state-finalize` on stale paused bundles.

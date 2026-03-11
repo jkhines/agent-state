@@ -4,43 +4,16 @@ description: Starts a focused work session without requiring a full summary
 alwaysApply: false
 ---
 
-## Start Work Session
+Resume work on one target bundle quickly. Does not run `/state-summary` by default.
 
-Starts work quickly on one target bundle. This command does not automatically run `/state-summary`.
+## Optional inputs
 
-## Inputs
+- `bundle_path` -- skip selection if known
+- `show_summary` -- if `true`, also run `/state-summary`
 
-When `/state-start` is invoked:
+## Behavior
 
-1. Optional:
-   - `bundle_path` (if known, use this directly)
-   - `state_root` (default: `/home/jkhines/Documents/agent-state`)
-   - `show_summary` (default: `false`)
-
-## Execution Steps
-
-1. Resolve target bundle:
-   - If `bundle_path` is provided, use it.
-   - Otherwise list active bundles sorted by recent activity and select one.
-2. Load quick context from target:
-   - Read `resume.md` first.
-   - Read `context.json` for status, branch, and repo path.
-3. Produce start brief:
-   - Objective
-   - Current status
-   - First command to run
-   - Immediate next 2 actions
-4. Optional summary:
-   - If `show_summary=true`, run `/state-summary` and include report path.
-5. Return:
-   - Target bundle path
-   - Start brief
-   - Optional summary report path
-
-## Example Commands
-
-```bash
-bundle="/home/jkhines/Documents/agent-state/active/2026-03-10-my-repo-task-agent3"
-echo "Starting bundle: $bundle"
-[ -f "$bundle/resume.md" ] && sed -n '1,12p' "$bundle/resume.md"
-```
+1. If no `bundle_path`, list active bundles sorted by `last_updated` and select the most recent.
+2. Read `resume.md` and `context.json` from the target bundle.
+3. Output a start brief: objective, status, first command to run, next 2 actions.
+4. If `show_summary=true`, run `/state-summary` and include the report path.

@@ -1,44 +1,40 @@
 # Agent State Workflow
 
-This directory stores temporary, in-progress work state outside repositories.
+Temporary, in-progress work state stored outside repositories.
 
 ## Directory Layout
 
-- `active/`: In-progress task bundles.
-- `archive/`: Completed, paused, or cancelled bundles.
-- `inbox/`: Loose files waiting to be filed into a bundle.
-- `reports/`: Daily overviews and restart summaries.
-- `templates/task-bundle/`: Starter structure for every new bundle.
+- `active/` -- in-progress task bundles
+- `archive/` -- completed, paused, or cancelled bundles
+- `inbox/` -- loose files waiting to be filed
 
 ## Bundle Naming
 
-Use:
-
 `<YYYY-MM-DD>-<repo-name>-<task-slug>-<agent-id>`
 
-Example:
+## Bundle Structure
 
-`2026-03-10-api-auth-refresh-agent3`
+Files: `prompt.md`, `context.json`, `notes.md`, `resume.md`, `commands.log`, `manifest.md`
 
-## Bundle Required Files
+Subdirectories: `artifacts/`, `outputs/`, `scratch/`
 
-- `prompt.md`: Objective and constraints.
-- `context.json`: Repo path, branch, status, ticket, timestamps.
-- `notes.md`: Running notes, decisions, blockers.
-- `resume.md`: One-screen handoff with exact next command.
-- `commands.log`: Important commands only.
-- `manifest.md`: Index of files stored in this bundle.
+## Commands
 
-## Bundle Subdirectories
-
-- `artifacts/`: External files, exports, payload samples, logs.
-- `outputs/`: Generated analysis or reports.
-- `scratch/`: Temporary working files.
+| Command | When to use |
+|---|---|
+| `/state-init` | Starting a new task |
+| `/state-start` | Resuming work on an existing bundle |
+| `/state-stop` | Ending a session (saves state and refreshes status) |
+| `/state-save` | Mid-session checkpoint without stopping |
+| `/state-restore` | Restoring a checkpoint into a clean repo |
+| `/state-summary` | Cross-bundle overview; add `prune=true` for stale cleanup |
+| `/state-finalize` | Archiving a completed bundle |
+| `/state-handoff` | Transferring work to another agent |
+| `/state-organize` | Filing a loose file into a bundle |
+| `/state-sync-memory` | Persisting decisions into repo memory docs |
 
 ## Daily Habit
 
-1. Run `/state-start` to resume one target bundle quickly.
-2. Run `/state-summary` only when you want a cross-bundle view.
-3. Use `/state-organize` for any loose file.
-4. Run `/state-stop` before ending the day.
-5. Move finished work with `/state-finalize`.
+1. `/state-start` to resume the target bundle.
+2. `/state-stop` before ending the day.
+3. `/state-finalize` for completed work.
