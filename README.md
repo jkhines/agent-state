@@ -22,8 +22,7 @@ Subdirectories: `artifacts/`, `outputs/`, `scratch/`
 
 | Command | When to use |
 |---|---|
-| `/state-init` | Starting a new task |
-| `/state-start` | Resuming work on an existing bundle |
+| `/state-start` | Starting a new task or resuming an existing bundle |
 | `/state-stop` | Ending a session (saves state and refreshes status) |
 | `/state-save` | Mid-session checkpoint without stopping |
 | `/state-restore` | Restoring a checkpoint into a clean repo |

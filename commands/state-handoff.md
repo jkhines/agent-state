@@ -6,12 +6,11 @@ alwaysApply: false
 
 Build a concise, actionable handoff so another agent can continue immediately.
 
-## Required inputs
+## Inputs
 
-- `bundle_path` -- absolute path to an active bundle
+All inputs have defaults and only need to be specified when overriding.
 
-## Optional inputs
-
+- `bundle_path` -- absolute path to an active bundle. Default: most recent active bundle by `last_updated`.
 - `target_agent` -- agent identifier to assign
 
 ## Behavior

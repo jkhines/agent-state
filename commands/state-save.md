@@ -7,13 +7,13 @@ alwaysApply: false
 Capture tracked, staged, and untracked changes for later restore. Usually called by `/state-stop`; use
 directly only for mid-session checkpoints.
 
-## Required inputs
+## Inputs
 
-- `repo_path` -- absolute path to a git repository
-- `bundle_path` -- absolute path to the active bundle
+All inputs have defaults and only need to be specified when overriding.
 
-## Optional inputs
-
+- `repo_path` -- absolute path to a git repository. Default: run `git rev-parse --show-toplevel` in the current
+  working directory.
+- `bundle_path` -- absolute path to the active bundle. Default: most recent active bundle by `last_updated`.
 - `label` -- short checkpoint label
 
 ## Behavior

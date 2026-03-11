@@ -6,12 +6,12 @@ alwaysApply: false
 
 Move a finished bundle from `active/` to `archive/` and record it in the archive index.
 
-## Required inputs
+## Inputs
 
-- `bundle_path` -- absolute path under `.../agent-state/active/`
+All inputs have defaults and only need to be specified when overriding.
 
-## Optional inputs
-
+- `bundle_path` -- absolute path under `.../agent-state/active/`. Default: most recent active bundle by
+  `last_updated`.
 - `status` -- `completed` (default), `paused`, or `cancelled`
 - `result_summary` -- one-line outcome
 

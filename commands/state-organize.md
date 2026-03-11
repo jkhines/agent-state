@@ -8,11 +8,11 @@ Move or copy a loose file into a bundle's subfolder and record it in `manifest.m
 
 ## Required inputs
 
-- `bundle_path` -- absolute path to the active bundle
 - `source_path` -- file to intake
 
-## Optional inputs
+## Inputs with defaults
 
+- `bundle_path` -- absolute path to the active bundle. Default: most recent active bundle by `last_updated`.
 - `destination_type` -- `artifacts` (default), `outputs`, or `scratch`
 - `mode` -- `move` (default) or `copy`
 - `purpose` -- short description

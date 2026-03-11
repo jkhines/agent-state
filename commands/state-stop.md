@@ -7,13 +7,13 @@ alwaysApply: false
 End a session cleanly with a checkpoint and an unambiguous restart point. Incorporates save and status refresh
 in one step.
 
-## Required inputs
+## Inputs
 
-- `bundle_path` -- absolute path to the active bundle
-- `repo_path` -- absolute path to the repository
+All inputs have defaults and only need to be specified when overriding.
 
-## Optional inputs
-
+- `bundle_path` -- absolute path to the active bundle. Default: most recent active bundle by `last_updated`.
+- `repo_path` -- absolute path to the repository. Default: run `git rev-parse --show-toplevel` in the current
+  working directory.
 - `status` -- `active` (default), `blocked`, or `ready-for-review`
 - `next_command` -- exact first command to run on resume
 - `blockers` -- short description

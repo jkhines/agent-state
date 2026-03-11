@@ -6,13 +6,13 @@ alwaysApply: false
 
 Copy durable decisions from a temporary bundle into repository memory documents for future sessions.
 
-## Required inputs
+## Inputs
 
-- `repo_path` -- absolute path to the repository
-- `bundle_path` -- absolute path to the active bundle
+All inputs have defaults and only need to be specified when overriding.
 
-## Optional inputs
-
+- `repo_path` -- absolute path to the repository. Default: run `git rev-parse --show-toplevel` in the current
+  working directory.
+- `bundle_path` -- absolute path to the active bundle. Default: most recent active bundle by `last_updated`.
 - `memory_dir` -- default: `<repo_path>/memory-bank`
 
 ## Behavior
