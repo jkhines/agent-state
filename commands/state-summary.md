@@ -8,7 +8,7 @@ Generate a restart-friendly overview of all bundles. Optionally flag stale bundl
 
 ## Optional inputs
 
-- `state_root` -- default: `/home/jkhines/Documents/agent-state`
+- `state_root` -- default: `${HOME}/Documents/agent-state`
 - `days` -- recent archive window, default: `2`
 - `prune` -- if `true`, flag stale bundles (inactive >= `stale_days`) with suggested actions
 - `stale_days` -- staleness threshold when pruning, default: `3`

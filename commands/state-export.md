@@ -10,16 +10,15 @@ Copy durable decisions from a temporary bundle into repository memory documents 
 
 All inputs have defaults and only need to be specified when overriding.
 
-- `repo_path` -- absolute path to the repository. Default: run `git rev-parse --show-toplevel` in the current
-  working directory.
+- `repo_path` -- absolute path to the workspace. Default: resolve using Workspace Resolution (see `/state-start`).
 - `bundle_path` -- absolute path to the active bundle. Default: match active bundles by repo_path + branch +
   agent_id (see Bundle Selection below).
 - `memory_dir` -- default: `<repo_path>/memory-bank`
 
 ## Bundle Selection
 
-When `bundle_path` is not provided, resolve the current `repo_path` (via `git rev-parse --show-toplevel`), `branch`
-(via `git branch --show-current`), and `agent_id` (see `/state-start` for derivation per environment). Then:
+When `bundle_path` is not provided, resolve the current `repo_path` and `branch` using Workspace Resolution (see
+`/state-start`), and `agent_id` (see `/state-start` for derivation per environment). Then:
 
 1. Exact match on repo_path + branch + agent_id -- use it.
 2. If no exact match, list active bundles matching repo_path + branch. Present the list and ask the user which bundle
@@ -36,3 +35,5 @@ When `bundle_path` is not provided, resolve the current `repo_path` (via `git re
    - `systemPatterns.md`: architecture or pattern decisions only.
    - `techContext.md`: environment or dependency constraints only.
 4. Keep entries short and factual. Prefer intent over implementation details. Do not duplicate unchanged content.
+5. If the workspace is not a git repository, warn the user that the exported memory files will not be
+   version-controlled unless they take action.

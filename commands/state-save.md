@@ -7,6 +7,14 @@ alwaysApply: false
 End a session cleanly with a checkpoint and an unambiguous restart point. Incorporates save and status refresh
 in one step.
 
+## Execution requirement
+
+This command MUST write files to disk. Every invocation must produce a bundle directory under
+`${HOME}/Documents/agent-state/active/` with updated `context.json`, `notes.md`, and `resume.md`. Printing a
+summary to the conversation without writing these files is not a valid execution of this command. If you find yourself
+composing a summary without having written to the bundle directory, stop and start over from step 1 of the Behavior
+section.
+
 ## Inputs
 
 All inputs have defaults and only need to be specified when overriding.
@@ -21,8 +29,8 @@ All inputs have defaults and only need to be specified when overriding.
 
 ## Bundle Selection
 
-When `bundle_path` is not provided, resolve the current `repo_path` (via `git rev-parse --show-toplevel`), `branch`
-(via `git branch --show-current`), and `agent_id` (see `/state-start` for derivation per environment). Then:
+When `bundle_path` is not provided, resolve the current `repo_path` and `branch` using Workspace Resolution (see
+`/state-start`), and `agent_id` (see `/state-start` for derivation per environment). Then:
 
 1. Exact match on repo_path + branch + agent_id -- use it.
 2. If no exact match, list active bundles matching repo_path + branch. Present the list and ask the user which bundle
@@ -50,5 +58,8 @@ When `bundle_path` is not provided, resolve the current `repo_path` (via `git re
    - **Next Actions**: ordered checklist of remaining steps, first command ready to run.
    - If `target_agent` is set, add `Assigned to: <target_agent>` at the top.
    - Write `Unknown` for any section where information is missing -- never assume.
-6. If `status=ready-for-review`, suggest `/state-archive`.
-7. If `next_command` is empty, flag the bundle as needing attention in output.
+6. Verify the save: confirm that `context.json`, `notes.md`, and `resume.md` exist in the bundle directory and that
+   `last_updated` in `context.json` reflects the current timestamp. If any file is missing, the save failed -- report
+   the error and do not continue.
+7. If `status=ready-for-review`, suggest `/state-archive`.
+8. If `next_command` is empty, flag the bundle as needing attention in output.
