@@ -19,10 +19,11 @@ section.
 
 All inputs have defaults and only need to be specified when overriding.
 
+- **Positional**: any text after `/state-save` that is not a named parameter is the next command to run on resume.
+  Example: `/state-save run the integration tests`
 - `bundle_path` -- absolute path to the active bundle. Default: match active bundles by repo_path + branch +
   agent_id (see Bundle Selection below).
 - `status` -- `active` (default), `blocked`, or `ready-for-review`
-- `next_command` -- exact first command to run on resume
 - `blockers` -- short description
 - `progress_note` -- short description
 - `target_agent` -- optional agent identifier to assign for the next session
@@ -41,7 +42,7 @@ When `bundle_path` is not provided, resolve the current `repo_path` and `branch`
 
 1. Check for an active bundle using Bundle Selection (above). If no bundle is found, run `/state-start` to create
    one before continuing.
-2. Update `context.json` with status, `last_updated`, `next_command`, blockers, and `target_agent` (if provided).
+2. Update `context.json` with status, `last_updated`, next command (positional arg), blockers, and `target_agent` (if provided).
 3. Refresh attachments: if `attachments.json` exists in the bundle and is non-empty, re-copy each file from its
    `source` path into the bundle's `attachments/` directory. If a source file no longer exists, log a warning in
    `notes.md` and keep the last bundled copy.
@@ -62,4 +63,4 @@ When `bundle_path` is not provided, resolve the current `repo_path` and `branch`
    `last_updated` in `context.json` reflects the current timestamp. If any file is missing, the save failed -- report
    the error and do not continue.
 7. If `status=ready-for-review`, suggest `/state-archive`.
-8. If `next_command` is empty, flag the bundle as needing attention in output.
+8. If no next command was provided, note it in the output as a reminder.
