@@ -35,8 +35,13 @@ All inputs have defaults and only need to be specified when overriding.
       exist, list them all and ask the user to choose.
    c. If no bundles match repo_path + branch, proceed to step 3 (create a new bundle).
 2. If a bundle is found or adopted, resume it:
-   a. Read `resume.md` from the target bundle.
-   b. Output the full resume: objective, status, decisions, blockers, artifacts, verification, and next actions.
+   a. Restore attachments: if `attachments.json` exists in the bundle and is non-empty, restore each file to its
+      `source` path. Create parent directories if needed. Before overwriting an existing local file, compare it to
+      the bundled copy. If the local file differs, warn the user with both paths and ask whether to overwrite,
+      skip, or view the diff. If the local file does not exist, restore silently.
+   b. Read `resume.md` from the target bundle.
+   c. Output the full resume: objective, status, decisions, blockers, artifacts, verification, next actions, and
+      the list of restored attachments.
 3. If no active bundle exists, create one:
    a. Bundle name: `<YYYY-MM-DD>-<repo-basename>-<task_slug>-<agent_id>`
    b. Create the bundle directory under `/home/jkhines/Documents/agent-state/active` with these files and
@@ -47,6 +52,7 @@ All inputs have defaults and only need to be specified when overriding.
       - `commands.log` -- significant commands only
       - `resume.md` -- structured resume with objective, status, decisions, blockers, artifacts, verification, and next actions
       - `manifest.md` -- file index (path, source, purpose)
-      - `artifacts/`, `outputs/`, `scratch/`
+      - `attachments.json` -- external file attachment manifest (initialized as `[]`)
+      - `artifacts/`, `outputs/`, `scratch/`, `attachments/`
    c. Report the full bundle path and files created.
 4. If `show_summary=true`, run `/state-summary` and include the report path.
