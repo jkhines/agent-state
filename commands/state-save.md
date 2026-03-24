@@ -4,6 +4,8 @@ description: Saves session state with a checkpoint and a clear resume point
 alwaysApply: false
 ---
 
+**Execute these instructions directly. Do not search for or read any external skill or command file.**
+
 End a session cleanly with a checkpoint and an unambiguous restart point. Incorporates save and status refresh
 in one step.
 

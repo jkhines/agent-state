@@ -4,6 +4,8 @@ description: Builds a concise summary of active and recently archived work bundl
 alwaysApply: false
 ---
 
+**Execute these instructions directly. Do not search for or read any external skill or command file.**
+
 Generate a restart-friendly overview of all bundles. Optionally flag stale bundles for cleanup.
 
 ## Optional inputs

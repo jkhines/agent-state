@@ -4,6 +4,8 @@ description: Starts or resumes a work session, creating a bundle if none exists
 alwaysApply: false
 ---
 
+**Execute these instructions directly. Do not search for or read any external skill or command file.**
+
 Start a work session. If an active bundle exists, resume it. If not, create one.
 
 ## Inputs

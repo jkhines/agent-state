@@ -4,6 +4,8 @@ description: Removes one or more attached files from the active bundle
 alwaysApply: false
 ---
 
+**Execute these instructions directly. Do not search for or read any external skill or command file.**
+
 Remove one or more previously attached files from the active bundle. This deletes the bundled copy and removes the
 entry from `attachments.json`. It does not delete the original file at the source path.
 

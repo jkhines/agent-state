@@ -4,6 +4,8 @@ description: Lists all files attached to the active bundle with their source pat
 alwaysApply: false
 ---
 
+**Execute these instructions directly. Do not search for or read any external skill or command file.**
+
 List all files currently attached to the active bundle. This is a read-only command that does not modify the bundle.
 
 ## Optional inputs

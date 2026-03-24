@@ -4,6 +4,8 @@ description: Attaches external files to the active bundle so they travel with st
 alwaysApply: false
 ---
 
+**Execute these instructions directly. Do not search for or read any external skill or command file.**
+
 Attach one or more external files to the active bundle. Attached files are copied into the bundle immediately and
 refreshed on every `/state-save`. They are restored to their original paths on `/state-start`.
 

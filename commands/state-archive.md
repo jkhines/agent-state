@@ -4,6 +4,8 @@ description: Moves a completed bundle from active to archive and updates the arc
 alwaysApply: false
 ---
 
+**Execute these instructions directly. Do not search for or read any external skill or command file.**
+
 Move a finished bundle from `active/` to `archive/` and record it in the archive index.
 
 ## Inputs

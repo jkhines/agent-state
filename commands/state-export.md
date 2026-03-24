@@ -4,6 +4,8 @@ description: Exports bundle decisions into repository memory documents
 alwaysApply: false
 ---
 
+**Execute these instructions directly. Do not search for or read any external skill or command file.**
+
 Copy durable decisions from a temporary bundle into repository memory documents for future sessions.
 
 ## Inputs
