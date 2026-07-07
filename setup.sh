@@ -1,5 +1,3 @@
 #!/bin/bash
-# One-time setup for this repository
-git config core.hooksPath .githooks
-echo "Git hooks configured."
-
+# Backward-compatible wrapper; prefer install.sh for new setups.
+exec "$(dirname "${BASH_SOURCE[0]}")/install.sh" "$@"

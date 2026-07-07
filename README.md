@@ -8,7 +8,7 @@ Agent State provides cognitive load management for developers running multiple A
 - [How It Works](#how-it-works)
 - [Installation](#installation)
 - [Usage](#usage)
-  - [Commands](#commands)
+  - [Skills](#skills)
   - [Typical Workflow](#typical-workflow)
 - [Storage Layout](#storage-layout)
 - [Comparison with Similar Tools](#comparison-with-similar-tools)
@@ -34,42 +34,42 @@ A bundle contains:
 - **resume.md** — structured handoff (current status, blockers, next actions)
 - **attachments/** — copies of external files that travel with the bundle
 
-The developer's workflow is two commands. `/state-start` loads a bundle into the agent so it picks up where the last session left off. `/state-save` writes the current state back before the session ends. Everything in between is normal work. `/state-summary` gives a cross-task overview so you can see all active work at a glance without context-switching into each session.
+The developer's workflow is two skills. `state-start` loads a bundle into the agent so it picks up where the last session left off. `state-save` writes the current state back before the session ends. Everything in between is normal work. `state-summary` gives a cross-task overview so you can see all active work at a glance without context-switching into each session.
 
 ## Installation
 
 ```bash
 git clone https://github.com/jkhines/agent-state.git
 cd agent-state
-bash setup.sh
+bash install.sh
 ```
 
-The setup script configures git hooks for the repository. Commands are invoked as slash commands within your AI coding assistant.
+The install script symlinks skills into `~/.cursor/skills` and `~/.claude/skills`, and configures git hooks for this repository. Invoke skills by name (e.g., `state-start`) or the legacy slash form (e.g., `/state-start`) in your AI coding assistant.
 
 ## Usage
 
-### Commands
+### Skills
 
-| Command | Purpose |
+| Skill | Purpose |
 |---|---|
-| `/state-start` | Start a new task or resume an existing bundle |
-| `/state-save` | Save session state with a checkpoint; optionally queue next command |
-| `/state-attach` | Copy external files into the bundle so they persist across sessions |
-| `/state-detach` | Remove attached files from the bundle (originals untouched) |
-| `/state-files` | List all attachments and their status |
-| `/state-summary` | Overview of all active bundles; flag stale work |
-| `/state-archive` | Move a completed bundle to the archive |
-| `/state-export` | Push durable decisions into repository memory documents |
+| `state-start` | Start a new task or resume an existing bundle |
+| `state-save` | Save session state with a checkpoint; optionally queue next command |
+| `state-attach` | Copy external files into the bundle so they persist across sessions |
+| `state-detach` | Remove attached files from the bundle (originals untouched) |
+| `state-files` | List all attachments and their status |
+| `state-summary` | Overview of all active bundles; flag stale work |
+| `state-archive` | Move a completed bundle to the archive |
+| `state-export` | Push durable decisions into repository memory documents |
 
 ### Typical Workflow
 
-1. `/state-summary` — see what is active, what is stale, and what needs attention.
-2. `/state-start` — pick a task and resume it. The agent reads the bundle and knows what happened last time.
+1. `state-summary` — see what is active, what is stale, and what needs attention.
+2. `state-start` — pick a task and resume it. The agent reads the bundle and knows what happened last time.
 3. Work normally across multiple sessions. Each task has its own bundle.
-4. `/state-save` — checkpoint before ending each session. Optionally queue the next step: `/state-save run the integration tests`.
-5. `/state-archive` — when a task is done, move it out of active work.
+4. `state-save` — checkpoint before ending each session. Optionally queue the next step: `state-save run the integration tests`.
+5. `state-archive` — when a task is done, move it out of active work.
 
-Tomorrow morning, `/state-summary` tells you exactly where everything stands—no git log archaeology required.
+Tomorrow morning, `state-summary` tells you exactly where everything stands—no git log archaeology required.
 
 ## Storage Layout
 
@@ -105,7 +105,7 @@ Two widely-used projects solve related problems but focus on the agent's context
 | Core problem | Developer cognitive load | Agent context window limits | Agent session continuity |
 | Primary user | The developer | The agent | The agent |
 | State format | Plain Markdown and JSON | SQLite with FTS5 indexing | Ledgers and handoff documents |
-| Automation | Explicit commands | MCP hooks (automatic) | Lifecycle hooks (automatic) |
+| Automation | Explicit skills | MCP hooks (automatic) | Lifecycle hooks (automatic) |
 | Agent support | Any agent that can read files | MCP-compatible agents | Claude Code |
 | Runtime dependency | None | MCP server | Python runtime + hooks |
 
